@@ -2,20 +2,24 @@
 
 This repository contains the deliverables for **Process Mining and Simulation** practices applied to a Shipment and Delivery process chain. The project focuses on generating event logs with noise and uncommon paths, applying the Alpha Algorithm to mine a Petri Net, and visualizing the results using Graphviz.
 
-## Project Overview
+---
+
+## 🌐 Project Overview
 
 **Objective**: Develop an event log generator to simulate process traces with noise and uncommon paths, apply the Alpha Algorithm to mine a Petri Net, and evaluate the model’s fitness, precision, and accuracy for a given process description.
 
-## Process Description
+---
+
+## 📋 Process Description
 
 The process modeled is an order fulfillment workflow:
 
-- **Sequential Steps**: Start with *Receive Order* → *Process Payment*.
-- **Parallel Execution**: *Verify Payment* and *Prepare Package*.
-- **AND-Split**: *Generate Shipping Label* and *Confirm Delivery*.
-- **XOR-Split**: *Dispatch by Courier* or *Enable In-store Pickup*.
+🔹 **Sequential Steps**: Start with *Receive Order* → *Process Payment*.\
+🔹 **Parallel Execution**: *Verify Payment* and *Prepare Package*.\
+🔹 **AND-Split**: *Generate Shipping Label* and *Confirm Delivery*.\
+🔹 **XOR-Split**: *Dispatch by Courier* or *Enable In-store Pickup*.
 
-**Input Parameters**:
+🔹 **Input Parameters**:
 
 - Noise Frequency: 20% (0.2, introduces *SysErr*).
 - Uncommon Path Frequency: 10% (0.1, introduces *ManualOverride*).
@@ -23,7 +27,9 @@ The process modeled is an order fulfillment workflow:
 - Noise Step: *SysErr*.
 - Uncommon Step: *ManualOverride*.
 
-## Key Features
+---
+
+## 🌟 Key Features
 
 ### 1. Preprocessing Steps
 
@@ -33,10 +39,10 @@ The process modeled is an order fulfillment workflow:
 
 ### 2. Design Choices
 
-- **Input Parameters**: Noise (20%) and uncommon path (10%) frequencies reflect real-world variability.
-- **Frozensets**: Used for transitions to ensure data immutability.
-- **Probabilistic Execution**: Models XOR and AND splits for diverse pathways.
-- **Visualization**: Graphviz for clear, distinguishable Petri Net representations (places, transitions, arcs).
+🔹 **Input Parameters**: Noise (20%) and uncommon path (10%) frequencies reflect real-world variability.\
+🔹 **Frozensets**: Used for transitions to ensure data immutability.\
+🔹 **Probabilistic Execution**: Models XOR and AND splits for diverse pathways.\
+🔹 **Visualization**: Graphviz for clear, distinguishable Petri Net representations (places, transitions, arcs).
 
 ### 3. Event Log Generator
 
@@ -45,10 +51,11 @@ The process modeled is an order fulfillment workflow:
 
 ### 4. Alpha Algorithm
 
-- Mines a Petri Net from event logs by:
-  - Calculating direct succession and footprint matrix.
-  - Extracting unique traces and their frequencies.
-  - Identifying maximal pairs for Petri Net places.
+🔹 Mines a Petri Net from event logs by:
+
+- Calculating direct succession and footprint matrix.
+- Extracting unique traces and their frequencies.
+- Identifying maximal pairs for Petri Net places.
 
 ### 5. Visualization
 
@@ -60,51 +67,62 @@ The process modeled is an order fulfillment workflow:
 - Combines event log generation, Alpha Algorithm, and visualization into a cohesive pipeline.
 - Outputs parsed logs, mined Petri Nets, and visual models.
 
-## Model Outputs
+---
 
-- **Petri Net Structure**: Includes transitions as frozensets (e.g., {Verify Payment}, {Prepare Package}, {SysErr}).
-- **Key Observations**:
-  - Captures sequential dependencies (*Receive Order* → *Process Payment*).
-  - Represents concurrent activities (*Verify Payment*, *Prepare Package*).
-  - Models XOR (*Dispatch by Courier* or *Enable In-store Pickup*) and AND splits (*Generate Shipping Label*, *Confirm Delivery*).
-  - Incorporates noise (*SysErr*) and uncommon steps (*ManualOverride*).
+## 📈 Model Outputs
 
-## Evaluation
+🔹 **Petri Net Structure**: Includes transitions as frozensets (e.g., {Verify Payment}, {Prepare Package}, {SysErr}).\
+🔹 **Key Observations**:
+
+- Captures sequential dependencies (*Receive Order* → *Process Payment*).
+- Represents concurrent activities (*Verify Payment*, *Prepare Package*).
+- Models XOR (*Dispatch by Courier* or *Enable In-store Pickup*) and AND splits (*Generate Shipping Label*, *Confirm Delivery*).
+- Incorporates noise (*SysErr*) and uncommon steps (*ManualOverride*).
+
+---
+
+## 🔍 Evaluation
 
 ### Fitness
 
-- **Strengths**: Accurately reproduces sequential and concurrent components; handles noise and uncommon paths.
-- **Challenges**: Noise (*SysErr*) may introduce unexplainable transitions, risking overfitting.
-- **Conclusion**: Good fitness, but noisy traces may cause misalignment.
+🔹 **Strengths**: Accurately reproduces sequential and concurrent components; handles noise and uncommon paths.\
+🔹 **Challenges**: Noise (*SysErr*) may introduce unexplainable transitions, risking overfitting.\
+🔹 **Conclusion**: Good fitness, but noisy traces may cause misalignment.
 
 ### Precision
 
-- **Strengths**: Explicit XOR/AND splits and isolated uncommon paths prevent excessive generalization.
-- **Challenges**: High noise frequency (20%) may dilute precision by introducing excessive *SysErr* transitions.
-- **Conclusion**: Moderate precision, improvable by reducing noise.
+🔹 **Strengths**: Explicit XOR/AND splits and isolated uncommon paths prevent excessive generalization.\
+🔹 **Challenges**: High noise frequency (20%) may dilute precision by introducing excessive *SysErr* transitions.\
+🔹 **Conclusion**: Moderate precision, improvable by reducing noise.
 
 ### Accuracy and Generalization
 
-- **Strengths**: Robust for real-world scenarios with clear concurrency and split representations.
-- **Weaknesses**: Excessive noise/uncommon paths may hinder generalization.
-- **Conclusion**: High accuracy, but needs refined noise and split probabilities.
+🔹 **Strengths**: Robust for real-world scenarios with clear concurrency and split representations.\
+🔹 **Weaknesses**: Excessive noise/uncommon paths may hinder generalization.\
+🔹 **Conclusion**: High accuracy, but needs refined noise and split probabilities.
 
-## Challenges
+---
+
+## ⚠️ Challenges
 
 - **Concurrency Handling**: Modeling parallel tasks (*Verify Payment*, *Prepare Package*) without ambiguous execution order.
 - **Noise/Uncommon Paths**: Balancing interpretability with *SysErr* and *ManualOverride* integration.
 - **Split Representation**: Accurately capturing probabilistic XOR/AND splits.
 - **Scalability**: Managing complex processes with increasing transitions.
 
-## Recommendations for Improvement
+---
 
-- **Reduce Noise Frequency**: Lower to \~10% to prevent overfitting and improve precision.
-- **Refine Probabilities**: Assign realistic probabilities to XOR/AND splits.
-- **Concurrency Clarity**: Add explicit constraints for parallel tasks.
-- **Validate Against Real Logs**: Compare outputs with actual traces to refine transitions.
-- **Visual Enhancements**: Use annotations to highlight noisy/uncommon steps in visualizations.
+## 💡 Recommendations for Improvement
 
-## Project Structure
+🔹 **Reduce Noise Frequency**: Lower to \~10% to prevent overfitting and improve precision.\
+🔹 **Refine Probabilities**: Assign realistic probabilities to XOR/AND splits.\
+🔹 **Concurrency Clarity**: Add explicit constraints for parallel tasks.\
+🔹 **Validate Against Real Logs**: Compare outputs with actual traces to refine transitions.\
+🔹 **Visual Enhancements**: Use annotations to highlight noisy/uncommon steps in visualizations.
+
+---
+
+## 📁 Project Structure
 
 ```plaintext
 .
@@ -121,60 +139,67 @@ The process modeled is an order fulfillment workflow:
 └── requirements.txt            # Python dependencies
 ```
 
-## Installation
+---
+
+## 🛠️ Installation
 
 ### Prerequisites
 
-- **Python**: v3.8 or later
-- **Graphviz**: For visualization
-- **Dependencies**: Listed in `requirements.txt`
+🔹 **Python**: v3.8 or later\
+🔹 **Graphviz**: For visualization\
+🔹 **Dependencies**: Listed in `requirements.txt`
 
 ### Setup
 
-1. **Clone the Repository**:
+- **Clone the Repository**:
 
-   ```bash
-   git clone https://github.com/username/process-mining-alpha.git
-   cd process-mining-alpha
-   ```
+  ```bash
+  git clone https://github.com/username/process-mining-alpha.git
+  cd process-mining-alpha
+  ```
 
-2. **Install Dependencies**:
+- **Install Dependencies**:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-3. **Install Graphviz**:
+- **Install Graphviz**:
 
-   - Follow Graphviz installation instructions.
+  - Follow Graphviz installation instructions.
 
-4. **Run the Pipeline**:
+- **Run the Pipeline**:
 
-   ```bash
-   python src/main.py
-   ```
+  ```bash
+  python src/main.py
+  ```
 
-## Usage
+---
+
+## 📖 Usage
 
 - **Generate Event Logs**: Run `event_log_generator.py` to create traces with specified noise (20%) and uncommon path (10%) frequencies.
 - **Mine Petri Net**: Use `alpha_algorithm.py` to process event logs and generate a Petri Net.
 - **Visualize**: Run `visualization.py` to create a Graphviz-based Petri Net diagram (`data/petri_net.png`).
 - **View Outputs**: Check `data/event_logs.txt` for traces and `data/petri_net.png` for the visual model.
 
-## Conclusion
+---
+
+## 🏁 Conclusion
 
 The project successfully generates event logs, mines a Petri Net using the Alpha Algorithm, and visualizes the results. The model shows strong fitness and moderate precision, with high overall accuracy. Refinements in noise frequency and split probabilities could further enhance performance.
 
-## Contributing
+---
+## 👨‍💻 Contributors
+- **Abdullah Daoud (22I-2626)**  
+- **Talha Mukhtiar (22I-2720)**  
+- **Faizan Rasheed (22I-2734)**
+- **Dawood Hussain (22I-2410)**
 
-Contributions to improve the algorithm or visualization are welcome:
+---
 
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature-branch`).
-3. Commit changes (`git commit -m "Add feature"`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a pull request.
+## ⚖️ License
+This project is for **academic and personal skill development purposes only**.  
+Reuse is allowed for **learning and research** with proper credit.
 
-## License
-
-MIT License - see `LICENSE` for details.
+---
